@@ -1,12 +1,11 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
 import propertyRoutes from './routes/propertyRoutes.js';
 import cloudinary, { cloudinaryConfig } from './config/cloudinary.js';
 import cors from 'cors';
-
-dotenv.config();
 
 const app = express();
 
@@ -26,18 +25,6 @@ app.get('/', (req, res) => {
 });
 
 // Database connection
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  console.log('Connected to MongoDB');
-  app.listen(process.env.PORT, () => {
-    console.log(`Server running on port ${process.env.PORT}`);
-  });
-})
-.catch((error) => {
-  console.error('MongoDB connection error:', error);
-});
+mongoose.connect(process.env.MONGODB_URI);
 
 export default app;

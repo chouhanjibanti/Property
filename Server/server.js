@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import authRoutes from './routes/authRoutes.js';
 import propertyRoutes from './routes/propertyRoutes.js';
-
+import connectDB from './config/db.js';
 
 
 const app = express();
@@ -25,16 +25,11 @@ app.use('/api/properties', propertyRoutes); // Sahi mounting
 
 const PORT = process.env.PORT || 5001;
 
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  console.log('Connected to MongoDB');
+const startServer = async () => {
+  await connectDB();
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
-})
-.catch((error) => {
-  console.error('MongoDB connection error:', error);
-});
+};
+
+startServer();
